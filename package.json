@@ -1,0 +1,23 @@
+{
+  "name": "odin-la-science-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo for Odin La Science - Frontend and Backend",
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "dev:backend": "cd backend && mvn spring-boot:run -Dspring-boot.run.profiles=dev -Dmaven.test.skip=true",
+    "build:backend": "cd backend && mvn clean package -Dmaven.test.skip=true",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && mvn clean install -Dmaven.test.skip=true"
+  },
+  "workspaces": [
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/odin-la-science-test/odin-la-science.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
