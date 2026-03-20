@@ -1,17 +1,29 @@
 #!/bin/bash
 set -e
 
-echo "Installing Maven..."
+echo "==> Configuring Java environment..."
+# Find Java installation
+if [ -z "$JAVA_HOME" ]; then
+    export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+    echo "JAVA_HOME set to: $JAVA_HOME"
+fi
+
+echo "Java version:"
+java -version
+
+echo "==> Installing Maven..."
 # Download and install Maven
 MAVEN_VERSION=3.9.6
-wget https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
+wget -q https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
 tar -xzf apache-maven-${MAVEN_VERSION}-bin.tar.gz
-export PATH=$PWD/apache-maven-${MAVEN_VERSION}/bin:$PATH
+export M2_HOME=$PWD/apache-maven-${MAVEN_VERSION}
+export PATH=$M2_HOME/bin:$PATH
 
 echo "Maven version:"
 mvn -version
 
-echo "Building application..."
+echo "==> Building application..."
 mvn clean package -DskipTests
 
-echo "Build complete!"
+echo "==> Build complete!"
+ls -lh target/*.jar
